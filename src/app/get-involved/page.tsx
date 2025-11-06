@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Users, Heart, DollarSign, UserPlus, Handshake, Gift, QrCode, Phone, Mail, MapPin } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
+import { PointerHighlight } from '@/components/ui/PointerHighlight'
 
 // Involvement options
 const involvementOptions = [
@@ -31,30 +32,7 @@ const involvementOptions = [
       { role: 'Specialist Trainer', commitment: '1 day/month', skills: 'Expertise in specific areas' }
     ],
     color: 'from-green-500 to-green-600'
-  },
-  {
-    id: 'donate',
-    title: 'Support Our Cause',
-    icon: Heart,
-    description: 'Help us continue our mission through financial support',
-    donationTypes: [
-      { type: 'Monthly Supporter', amount: '₹500-2000/month', impact: 'Sustain regular programs' },
-      { type: 'Project Sponsor', amount: '₹5000-25000', impact: 'Fund specific initiatives' },
-      { type: 'Equipment Donor', amount: '₹1000-10000', impact: 'Provide camping & training gear' },
-      { type: 'Scholarship Fund', amount: '₹2000-15000', impact: 'Support underprivileged participants' }
-    ],
-    color: 'from-purple-500 to-purple-600'
   }
-]
-
-// Donation amounts
-const donationAmounts = [
-  { amount: 500, impact: 'Funds basic materials for 5 Cubs for a month' },
-  { amount: 1000, impact: 'Provides camping equipment for one Scout' },
-  { amount: 2500, impact: 'Supports a Scout camp for 10 participants' },
-  { amount: 5000, impact: 'Funds a community service project' },
-  { amount: 10000, impact: 'Sponsors educational materials for Beyond Coal project' },
-  { amount: 25000, impact: 'Supports a major environmental conservation initiative' }
 ]
 
 const fadeInUp = {
@@ -73,8 +51,6 @@ const stagger = {
 
 export default function GetInvolvedPage() {
   const [activeTab, setActiveTab] = useState('member')
-  const [selectedAmount, setSelectedAmount] = useState(1000)
-  const [customAmount, setCustomAmount] = useState('')
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -114,7 +90,9 @@ export default function GetInvolvedPage() {
             className="text-center"
           >
             <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6">
-              Get Involved
+              Get <PointerHighlight containerClassName="inline-block">
+                <span className="text-green-300">Involved</span>
+              </PointerHighlight>
             </h1>
             <p className="text-xl md:text-2xl text-primary-100 max-w-4xl mx-auto leading-relaxed">
               Join our mission to develop young leaders, protect the environment, 
@@ -347,148 +325,6 @@ export default function GetInvolvedPage() {
                     ></textarea>
                     <Button type="submit" className="w-full" size="lg">
                       Register as Volunteer
-                    </Button>
-                  </form>
-                </div>
-              </div>
-            )}
-
-            {activeTab === 'donate' && (
-              <div className="grid lg:grid-cols-2 gap-12">
-                <div>
-                  <h3 className="text-2xl font-heading font-bold text-primary-700 mb-6">
-                    Support Our Mission
-                  </h3>
-                  <p className="text-gray-600 mb-8 leading-relaxed">
-                    Your donations help us continue our vital work in youth development, 
-                    environmental conservation, and community service. Every contribution makes a difference.
-                  </p>
-                  
-                  <div className="space-y-4 mb-8">
-                    <h4 className="text-lg font-heading font-bold text-primary-700">
-                      Donation Impact
-                    </h4>
-                    {donationAmounts.map((donation, index) => (
-                      <div 
-                        key={index} 
-                        className={`p-4 rounded-lg border cursor-pointer transition-all ${
-                          selectedAmount === donation.amount
-                            ? 'border-primary-500 bg-primary-50'
-                            : 'border-gray-200 hover:border-primary-300'
-                        }`}
-                        onClick={() => setSelectedAmount(donation.amount)}
-                      >
-                        <div className="flex justify-between items-start">
-                          <div>
-                            <div className="text-lg font-bold text-primary-600">
-                              ₹{donation.amount.toLocaleString()}
-                            </div>
-                            <div className="text-sm text-gray-600">
-                              {donation.impact}
-                            </div>
-                          </div>
-                          <div className={`w-4 h-4 rounded-full border-2 ${
-                            selectedAmount === donation.amount
-                              ? 'border-primary-500 bg-primary-500'
-                              : 'border-gray-300'
-                          }`}></div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div>
-                    <h4 className="text-lg font-heading font-bold text-primary-700 mb-4">
-                      Payment Methods
-                    </h4>
-                    <div className="space-y-3 text-sm text-gray-600">
-                      <div className="flex items-center">
-                        <QrCode className="h-5 w-5 mr-2 text-primary-600" />
-                        UPI: Scan QR code for instant payment
-                      </div>
-                      <div className="flex items-center">
-                        <DollarSign className="h-5 w-5 mr-2 text-primary-600" />
-                        Bank Transfer: Direct account transfer
-                      </div>
-                      <div className="flex items-center">
-                        <Gift className="h-5 w-5 mr-2 text-primary-600" />
-                        Cheque: Payable to "24th Asoka Group BS&G"
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-sage-50 p-8 rounded-2xl">
-                  <h3 className="text-xl font-heading font-bold text-primary-700 mb-6">
-                    Make a Donation
-                  </h3>
-                  
-                  <div className="mb-6">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Donation Amount
-                    </label>
-                    <div className="flex items-center space-x-2">
-                      <span className="text-lg font-bold text-primary-600">₹</span>
-                      <input
-                        type="number"
-                        value={customAmount || selectedAmount}
-                        onChange={(e) => setCustomAmount(e.target.value)}
-                        className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                        min="100"
-                      />
-                    </div>
-                  </div>
-
-                  <form onSubmit={handleSubmit} className="space-y-4">
-                    <div className="grid md:grid-cols-2 gap-4">
-                      <input
-                        type="text"
-                        name="name"
-                        placeholder="Full Name"
-                        value={formData.name}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                        required
-                      />
-                      <input
-                        type="email"
-                        name="email"
-                        placeholder="Email Address"
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                        required
-                      />
-                    </div>
-                    <input
-                      type="tel"
-                      name="phone"
-                      placeholder="Phone Number"
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                    />
-                    <textarea
-                      name="message"
-                      placeholder="Message (optional)"
-                      value={formData.message}
-                      onChange={handleInputChange}
-                      rows={3}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                    ></textarea>
-                    
-                    <div className="bg-white p-4 rounded-lg border border-gray-200">
-                      <h4 className="font-medium text-gray-700 mb-2">QR Code for UPI Payment</h4>
-                      <div className="flex items-center justify-center h-32 bg-gray-100 rounded">
-                        <QrCode className="h-16 w-16 text-gray-400" />
-                      </div>
-                      <p className="text-xs text-gray-500 text-center mt-2">
-                        Scan with any UPI app to donate
-                      </p>
-                    </div>
-                    
-                    <Button type="submit" className="w-full" size="lg">
-                      Proceed to Payment
                     </Button>
                   </form>
                 </div>

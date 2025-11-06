@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { Award, Trophy, Star, Medal, Users, Calendar, MapPin, Target } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
+import { PointerHighlight } from '@/components/ui/PointerHighlight'
 import Link from 'next/link'
 
 // Awards and achievements data
@@ -172,7 +173,9 @@ export default function AchievementsPage() {
             className="text-center"
           >
             <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6">
-              Achievements
+              <PointerHighlight containerClassName="inline-block">
+                <span className="text-green-300">Achievements</span>
+              </PointerHighlight>
             </h1>
             <p className="text-xl md:text-2xl text-primary-100 max-w-4xl mx-auto leading-relaxed">
               Celebrating 85+ years of excellence, recognition, and outstanding contributions 

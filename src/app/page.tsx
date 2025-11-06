@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { ArrowRight, Users, TreePine, Award, MapPin, Phone, Heart, Star, Target, Globe } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
+import { PointerHighlight } from '@/components/ui/PointerHighlight'
 import Link from 'next/link'
 
 // Statistics data
@@ -161,7 +162,9 @@ export default function HomePage() {
             <div className="mb-8">
               <h2 className="text-2xl md:text-4xl lg:text-5xl font-heading font-bold text-gray-800 mb-4">
                 <span className="block text-green-700">Serving Community</span>
-                <span className="block text-green-600">Protecting Nature</span>
+                <PointerHighlight containerClassName="inline-block">
+                  <span className="text-green-600">Protecting Nature</span>
+                </PointerHighlight>
                 <span className="block text-gray-700">Building Character</span>
               </h2>
             </div>

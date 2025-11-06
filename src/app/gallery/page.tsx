@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Filter, X, ChevronLeft, ChevronRight, Calendar, MapPin, Users } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
+import { PointerHighlight } from '@/components/ui/PointerHighlight'
 
 // Types
 interface GalleryItem {
@@ -221,7 +222,9 @@ export default function GalleryPage() {
             className="text-center"
           >
             <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6">
-              Gallery
+              <PointerHighlight containerClassName="inline-block">
+                <span className="text-green-300">Gallery</span>
+              </PointerHighlight>
             </h1>
             <p className="text-xl md:text-2xl text-primary-100 max-w-4xl mx-auto leading-relaxed">
               Explore the memories, adventures, and achievements that tell the story 

@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { MapPin, Phone, Mail, Clock, Facebook, Instagram, Calendar, Send, MessageCircle } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
+import { PointerHighlight } from '@/components/ui/PointerHighlight'
 
 // Contact information
 const contactInfo = {
@@ -138,7 +139,9 @@ export default function ContactPage() {
             className="text-center"
           >
             <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6">
-              Contact Us
+              <PointerHighlight containerClassName="inline-block">
+                <span className="text-green-300">Contact</span>
+              </PointerHighlight> Us
             </h1>
             <p className="text-xl md:text-2xl text-primary-100 max-w-4xl mx-auto leading-relaxed">
               Ready to start your Scouting journey? Have questions about our programs? 

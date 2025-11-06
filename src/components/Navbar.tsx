@@ -2,24 +2,77 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { Menu, X, Phone, Mail } from 'lucide-react'
+import { Menu, X, Phone, Mail, Star, Compass, TreePine, ChevronDown, Users, Handshake, Heart } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const navigation = [
   { name: 'Home', href: '/' },
   { name: 'About', href: '/about' },
-  { name: 'Units', href: '/units' },
+  { 
+    name: 'Units', 
+    href: '/units',
+    hasDropdown: true,
+    dropdownItems: [
+      {
+        name: 'Cubs',
+        href: '/units#cubs',
+        description: 'Fun, friendship and outdoor adventure',
+        ageRange: '6-11 years',
+        icon: Star,
+        color: 'from-yellow-400 to-orange-500'
+      },
+      {
+        name: 'Scouts', 
+        href: '/units#scouts',
+        description: 'Adventure, skills and friendship',
+        ageRange: '11-17 years', 
+        icon: Compass,
+        color: 'from-green-500 to-emerald-600'
+      },
+      {
+        name: 'Rovers',
+        href: '/units#rovers', 
+        description: 'Leadership, service and adventure',
+        ageRange: '17-25 years',
+        icon: TreePine,
+        color: 'from-blue-500 to-indigo-600'
+      }
+    ]
+  },
   { name: 'Projects', href: '/projects' },
   { name: 'Gallery', href: '/gallery' },
   { name: 'Achievements', href: '/achievements' },
-  { name: 'Get Involved', href: '/get-involved' },
+  { 
+    name: 'Get Involved', 
+    href: '/get-involved',
+    hasDropdown: true,
+    dropdownItems: [
+      {
+        name: 'Become a Member',
+        href: '/get-involved#member',
+        description: 'Join Cubs, Scouts, or Rovers sections',
+        details: 'Start your Scouting journey',
+        icon: Users,
+        color: 'from-blue-500 to-blue-600'
+      },
+      {
+        name: 'Volunteer With Us', 
+        href: '/get-involved#volunteer',
+        description: 'Support activities and mentor youth',
+        details: 'Make a difference in young lives',
+        icon: Handshake,
+        color: 'from-green-500 to-green-600'
+      }
+    ]
+  },
   { name: 'Contact', href: '/contact' },
 ]
 
 export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -76,24 +129,141 @@ export function Navbar() {
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-1">
               {navigation.map((item) => (
-                <Link
+                <div
                   key={item.name}
-                  href={item.href}
-                  className="relative text-gray-700 hover:text-green-600 px-4 py-2 text-sm font-medium transition-colors duration-200 group"
+                  className="relative"
+                  onMouseEnter={() => item.hasDropdown && setActiveDropdown(item.name)}
+                  onMouseLeave={() => item.hasDropdown && setActiveDropdown(null)}
                 >
-                  {item.name}
-                  <span className="absolute bottom-0 left-4 right-4 h-0.5 bg-green-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left" />
-                </Link>
+                  <Link
+                    href={item.href}
+                    className="relative text-gray-700 hover:text-green-600 px-4 py-2 text-sm font-medium transition-colors duration-200 group flex items-center space-x-1"
+                  >
+                    <span>{item.name}</span>
+                    {item.hasDropdown && (
+                      <ChevronDown 
+                        className={cn(
+                          "h-4 w-4 transition-transform duration-200",
+                          activeDropdown === item.name ? "rotate-180" : ""
+                        )} 
+                      />
+                    )}
+                    <span className="absolute bottom-0 left-4 right-4 h-0.5 bg-green-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left" />
+                  </Link>
+
+                  {/* Dropdown Menu */}
+                  {item.hasDropdown && (
+                    <AnimatePresence>
+                      {activeDropdown === item.name && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 10 }}
+                          transition={{ duration: 0.2 }}
+                          className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden"
+                          style={{ 
+                            width: item.name === 'Units' ? '420px' : '440px'
+                          }}
+                        >
+                          {/* Header */}
+                          <div className="bg-linear-to-r from-green-50 to-emerald-50 px-6 py-4 border-b border-gray-100">
+                            <h3 className="text-base font-bold text-gray-900 flex items-center space-x-2">
+                              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                              <span>
+                                {item.name === 'Units' ? 'Our Scouting Units' : 'Join Our Mission'}
+                              </span>
+                            </h3>
+                            <p className="text-xs text-gray-600 mt-1">
+                              {item.name === 'Units' 
+                                ? 'Discover the perfect program for your age group' 
+                                : 'Multiple ways to make a difference in your community'
+                              }
+                            </p>
+                          </div>
+
+                          {/* Content */}
+                          <div className="p-4">
+                            <div className="space-y-3">
+                              {item.dropdownItems?.map((dropdownItem, index) => {
+                                const IconComponent = dropdownItem.icon
+                                return (
+                                  <Link
+                                    key={dropdownItem.name}
+                                    href={dropdownItem.href}
+                                    className="group flex items-center space-x-4 p-3 rounded-xl hover:bg-gray-50 transition-all duration-200 border border-transparent hover:border-gray-200"
+                                  >
+                                    {/* Icon with gradient background */}
+                                    <div className={cn(
+                                      "w-10 h-10 rounded-lg bg-linear-to-br flex items-center justify-center group-hover:scale-110 transition-transform duration-200 shadow-sm",
+                                      dropdownItem.color
+                                    )}>
+                                      <IconComponent className="h-5 w-5 text-white" />
+                                    </div>
+                                    
+                                    {/* Content */}
+                                    <div className="flex-1 min-w-0">
+                                      <div className="flex items-center justify-between">
+                                        <h4 className="text-sm font-semibold text-gray-900 group-hover:text-green-600 transition-colors truncate">
+                                          {dropdownItem.name}
+                                        </h4>
+                                        {'ageRange' in dropdownItem && (
+                                          <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full font-medium shrink-0 ml-2">
+                                            {dropdownItem.ageRange}
+                                          </span>
+                                        )}
+                                      </div>
+                                      <p className="text-xs text-gray-600 mt-1 line-clamp-1">
+                                        {dropdownItem.description}
+                                      </p>
+                                      {'details' in dropdownItem && (
+                                        <p className="text-xs text-green-600 mt-1 font-medium">
+                                          {dropdownItem.details}
+                                        </p>
+                                      )}
+                                    </div>
+
+                                    {/* Arrow indicator */}
+                                    <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                                      <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                      </svg>
+                                    </div>
+                                  </Link>
+                                )
+                              })}
+                            </div>
+
+                            {/* Footer CTA */}
+                            <div className="mt-4 pt-3 border-t border-gray-100">
+                              <Link
+                                href={item.href}
+                                className="group w-full bg-linear-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white text-center px-4 py-2.5 rounded-lg text-xs font-semibold transition-all duration-200 flex items-center justify-center space-x-2 shadow-sm hover:shadow-md"
+                              >
+                                <span>
+                                  {item.name === 'Units' ? 'Explore All Programs' : 'Start Your Journey'}
+                                </span>
+                                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                </svg>
+                              </Link>
+                            </div>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  )}
+                </div>
               ))}
             </div>
 
             {/* CTA Button */}
             <div className="hidden lg:block">
               <Link
-                href="/get-involved"
-                className="bg-green-600 hover:bg-green-700 text-white px-6 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 shadow-sm hover:shadow-md"
+                href="/donate"
+                className="bg-green-600 hover:bg-green-700 text-white px-6 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 shadow-sm hover:shadow-md flex items-center space-x-2"
               >
-                Join Our Movement
+                <Heart className="h-4 w-4" />
+                <span>Donate Now</span>
               </Link>
             </div>
 
@@ -119,22 +289,56 @@ export function Navbar() {
             >
               <div className="px-4 py-4 space-y-2">
                 {navigation.map((item) => (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    className="block text-gray-700 hover:text-green-600 hover:bg-gray-50 px-4 py-3 rounded-lg text-base font-medium transition-colors"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    {item.name}
-                  </Link>
+                  <div key={item.name}>
+                    <Link
+                      href={item.href}
+                      className="block text-gray-700 hover:text-green-600 hover:bg-gray-50 px-4 py-3 rounded-lg text-base font-medium transition-colors"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      {item.name}
+                    </Link>
+                    {/* Mobile dropdown items */}
+                    {item.hasDropdown && item.dropdownItems && (
+                      <div className="ml-4 mt-2 space-y-2">
+                        {item.dropdownItems.map((dropdownItem) => {
+                          const IconComponent = dropdownItem.icon
+                          return (
+                            <Link
+                              key={dropdownItem.name}
+                              href={dropdownItem.href}
+                              className="flex items-center space-x-3 text-gray-600 hover:text-green-600 hover:bg-gray-50 px-3 py-2 rounded-lg text-sm transition-colors"
+                              onClick={() => setIsMobileMenuOpen(false)}
+                            >
+                              <div className={cn(
+                                "w-8 h-8 rounded-lg bg-linear-to-br flex items-center justify-center",
+                                dropdownItem.color
+                              )}>
+                                <IconComponent className="h-4 w-4 text-white" />
+                              </div>
+                              <div>
+                                <div className="font-medium">{dropdownItem.name}</div>
+                                {'ageRange' in dropdownItem && (
+                                  <div className="text-xs text-gray-500">{dropdownItem.ageRange}</div>
+                                )}
+                                {'details' in dropdownItem && (
+                                  <div className="text-xs text-gray-500">{dropdownItem.details}</div>
+                                )}
+                              </div>
+                            </Link>
+                          )
+                        })}
+                      </div>
+                    )}
+                  </div>
                 ))}
                 <div className="pt-4 border-t border-gray-100">
                   <Link
-                    href="/get-involved"
-                    className="block bg-green-600 hover:bg-green-700 text-white text-center px-4 py-3 rounded-lg text-base font-semibold transition-colors"
+                    href="/donate"
+                    className="bg-green-600 hover:bg-green-700 text-white text-center px-4 py-3 rounded-lg text-base font-semibold transition-colors flex items-center justify-center space-x-2"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    Join Our Movement
+                    <Heart className="h-4 w-4" />
+                    <span>Donate Now</span>
                   </Link>
                 </div>
               </div>

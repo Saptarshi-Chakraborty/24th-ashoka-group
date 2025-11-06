@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { TreePine, Users, Heart, BookOpen, Filter, MapPin, Calendar, Award } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
+import { PointerHighlight } from '@/components/ui/PointerHighlight'
 import Link from 'next/link'
 
 // Project categories
@@ -196,7 +197,9 @@ export default function ProjectsPage() {
             className="text-center"
           >
             <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6">
-              Our Projects
+              Our <PointerHighlight containerClassName="inline-block">
+                <span className="text-green-300">Projects</span>
+              </PointerHighlight>
             </h1>
             <p className="text-xl md:text-2xl text-primary-100 max-w-4xl mx-auto leading-relaxed">
               Discover our ongoing initiatives that are making a real difference in communities, 

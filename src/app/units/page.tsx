@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { Users, Calendar, MapPin, Award, Heart, Star, Target, Trophy, Compass, TreePine } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
+import { PointerHighlight } from '@/components/ui/PointerHighlight'
 import Link from 'next/link'
 
 // Units data
@@ -126,7 +127,9 @@ export default function UnitsPage() {
             className="text-center"
           >
             <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6">
-              Our Units
+              Our <PointerHighlight containerClassName="inline-block">
+                <span className="text-green-300">Units</span>
+              </PointerHighlight>
             </h1>
             <p className="text-xl md:text-2xl text-primary-100 max-w-4xl mx-auto leading-relaxed">
               From Cubs to Rovers, we provide age-appropriate programs that challenge, 

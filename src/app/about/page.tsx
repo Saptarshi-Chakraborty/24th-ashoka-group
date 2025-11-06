@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { Users, Calendar, MapPin, Award, Heart, Compass } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
+import { PointerHighlight } from '@/components/ui/PointerHighlight'
 import Link from 'next/link'
 
 // Timeline data
@@ -109,7 +110,9 @@ export default function AboutPage() {
             className="text-center"
           >
             <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6">
-              Our Story
+              Our <PointerHighlight containerClassName="inline-block">
+                <span className="text-green-300">Story</span>
+              </PointerHighlight>
             </h1>
             <p className="text-xl md:text-2xl text-primary-100 max-w-4xl mx-auto leading-relaxed">
               For over eight decades, the 24th Asoka Group has been a beacon of youth development, 
