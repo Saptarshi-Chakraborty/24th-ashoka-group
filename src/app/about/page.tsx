@@ -111,7 +111,7 @@ export default function AboutPage() {
           >
             <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6">
               Our <PointerHighlight containerClassName="inline-block">
-                <span className="text-green-300">Story</span>
+                <span className="text-green-400">Story</span>
               </PointerHighlight>
             </h1>
             <p className="text-xl md:text-2xl text-primary-100 max-w-4xl mx-auto leading-relaxed">

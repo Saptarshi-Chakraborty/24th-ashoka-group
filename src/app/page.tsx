@@ -163,7 +163,7 @@ export default function HomePage() {
               <h2 className="text-2xl md:text-4xl lg:text-5xl font-heading font-bold text-gray-800 mb-4">
                 <span className="block text-green-700">Serving Community</span>
                 <PointerHighlight containerClassName="inline-block">
-                  <span className="text-green-600">Protecting Nature</span>
+                  <span className="text-purple-600">Protecting Nature</span>
                 </PointerHighlight>
                 <span className="block text-gray-700">Building Character</span>
               </h2>
